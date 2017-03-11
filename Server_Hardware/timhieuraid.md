@@ -2,7 +2,8 @@
 
 ### 1. Khái niệm
  - Raid là hình thức ghép nhiều ổ cứng vật lí thành một hệ thống ổ  đĩa cứng có chức năng tăng tốc đô đọc /ghi dữ liệu hoặc tăng tính an toàn của dữ liệu . (Có thể kết hợp cả 2 yếu tố trên )
- ___
+___
+
 ### 2. Ưu nhược điểm của từng loại Raid
  - Có nhiều loại Raid nhưng mình sẽ tìm hiểu một số loại raid phổ biến là : Raid 0 ,Raid 1 ,raid 5 và raid 10 .
  ___
@@ -40,7 +41,7 @@ ___
   - Là sự kết hợp giữa raid 0 và raid 1 .
   - Để setup cần tối thiểu 4 ổ cứng .
 
-    <img src="https://live.vinahost.vn/img/59/1423068830-5e3a1d0747e01e6cf14025d406652bec.png" >
+    <img src="http://www.athlsolutions.com/web/Portals/0/news/KN_Raid_11.jpg" >
 
     - Đối với Raid 10 dữ liệu được lưu đồng thời vào 4 ổ cứng. 2 ổ dạng striping (raid 0) và 2 ổ dạng (mirroring) raid 1 .
 
