@@ -70,6 +70,6 @@ ___
 
 ___
 
-### Raid 5
+### Raid 6
  - Giống chuẩn 5
  - Hỏng tối đa được 2 ổ .
