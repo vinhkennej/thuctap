@@ -10,7 +10,7 @@ ___
  - Là thuật toán thường dùng rất đối với hệ thống vừa và nhỏ , ít đòi hỏi về khả năng mở rộng .
 
  - Hoạt động như hình vẽ :
-  ![](images/round-robin.png)
+  ![](images/round-robin.png) 
  `Nhược điểm ` : Nếu server 1 có nhiều CPU , RAM ..(Cấu hình cao hơn) Server 2 nên server 1 có thể xử lí khối lượng công việc lớn hơn Server 2 , nhưng đối với thuật toán round robin thì trong load banner vẫn coi hai máy là như nhau =>  Server 2 có thể bị quá tải nhanh hơn .
 ___
 

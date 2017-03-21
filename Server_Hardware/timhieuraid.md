@@ -67,9 +67,8 @@ ___
    `Nhược điểm`
     - Chi phí phát sinh thêm 1 ổ so vs hình thức lưu trữ thông thường.
     - TỔng dung lượng ổ cứng sau cùng bằng tổng dung lượng trừ đi 1 ổ. Ví dụ 4 ổ 500gb thì khi triển khai raid 5 chỉ còn 1500gb
-
-___
+    __
 
 ### Raid 6
- - Giống chuẩn 5
+ - Giống chuẩn 5 .
  - Hỏng tối đa được 2 ổ .
