@@ -38,24 +38,31 @@ ___
   <li> `Nhược điểm` :  Thích hợp với server chỉ có 1 website , nếu có nhiều server hoặc có các y/c phức tạp hơn thì dùng layer 7 </li>
   <li> `Ưu điểm` : Tốn ít tài nguyên do đó nhanh hơn so với cân bằng tải dựa trên layer 7 </li>
  </ul>
+
  <a name="layer4_lb"> </a>
+
 ## 1.2. Các kiểu cân bằng tải layer 4
  <a name="layer4_lb"> </a>
+
   - #### 1.2.1 . NAT (Network Address Translation )
    <a name="NAT"> </a>
-   - ** Đặc điểm **
+
+    ** Đặc điểm **
       - Làm việc với các máy chủ backend (real server) bằng cách thay đổi default gateway để trỏ đến bộ cân bằng tải .
       - High Performance vì nó hoạt động giống như một router .
       - Là minh bạch với máy chủ thực ( Server log hiển thị đúng địa chỉ IP của client)
 
   - #### 1.2.2. Direct Routing
+
    <a name="directrouting"> </a>
-    - ** Đặc điểm **
+
+     ** Đặc điểm **
       - Là kĩ thuật cân bằng tải duy nhất ko y/c default gateway trỏ đến bộ cân bằng tải .
       - Tính minh bạch hoàn toàn : Server sẽ thấy một kết nối trực tiếp từ IP client và trả về cho client thông qua default gateway thông thường .
 
   - #### 1.2.3. Tunnel
      <a name="tunnel"> </a>
+
      - ** Đặc điểm **
        - Bộ cân bằng tải lấy y/c từ client sau đó đóng gói chúng với IP tunnel để chuyển tiếp chúng tới máy chủ .
 
@@ -66,7 +73,7 @@ ___
 <a name="layer7dacdiem"> </a>
 
  <div style="text-align:center"><img src="images/layer7.png" /> </div>
- - ** Đặc điểm **
+  ** Đặc điểm **
  <ul>
   <li> Ở layer 7 load balancer hoạt động ở lớp application , nó sẽ xử lí trực tiếp với nội dung của gói dữ liệu. Nó có thể quyết định cân bằng tải dựa trên nội dung của gói tin (URL hoặc cookie...) sau đó sẽ tạo 1 kết nối TCP dến máy chủ uptream đã chọn và tạo ra y/c đến máy chủ . </li>
   <li> Chúng ta có thể chia tải dựa theo request của người dùng . Ta có thể cấu hình để chuyển các request dến static content qua các server xử lí static(html,css,js,ipg...) .  Còn các request khác thì chuyển qua cụm server xử lí dynamic content .</li>
