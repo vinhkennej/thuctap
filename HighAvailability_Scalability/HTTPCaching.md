@@ -5,13 +5,17 @@
 - [4. Các giải pháp HTTP Caching](#giaiphap)
 
     [4.1 Tham số Last-Modified](#Last-Modified)
+
     [4.2 Tham số `Etag`](#etag)
+
     [4.3. Tham số Expires](#expires)
+
     [4.4. Tham số Cache-control](#cache-control)
 
 
 ___
-<a name="httpcaching"> </a>
+<a name="httpcaching"> </a
+
 # 1. HTTP Caching là gì ?
  - Là kĩ thuật di chuyển các bản copy các tài nguyên tĩnh phía **Server** xuống lưu ở dưới **Client** .Tác dụng giúp cho người dùng sẽ cảm thấy độ trễ rất thấp khi y/c tài nguyên tĩnh này từ phía **Server** , lưu lượng truyền đi ít hơn , số request đến **Server** ít hơn .
 
@@ -19,10 +23,10 @@ ___
 
  - Quy trình thực hiện :
    <ul>
-    <li>1. **Client** yêu cầu file index.html</li>
-    <li>2. **Server** sẽ tìm kiếm xem file index.html ở đâu</li>
-    <li>3. **Server** tìm thấy và trả về cho **Client** </li>
-    <li>4. **Client** sẽ download file và hiển thị cho người dùng </li>
+    <li> 1. **Client** yêu cầu file index.html</li>
+    <li> 2. **Server** sẽ tìm kiếm xem file index.html ở đâu</li>
+    <li> 3. **Server** tìm thấy và trả về cho **Client** </li>
+    <li> 4. **Client** sẽ download file và hiển thị cho người dùng </li>
   </ul>
 
 *Giả thiết đặt ra là nếu một file tĩnh ít khi bị thay đổi thì sẽ có những bất cập xảy ra là mỗi lần client y/c thì Server lại phải tìm kiếm file đó và trả về cho Client , rồi Client lại download thì mới sử dụng được . Điều đó là quá lãng phí thời gian của Server và thời gian của ng sử dụng*
@@ -56,8 +60,8 @@ ___
   <a name="Last-Modified"></a>
 
  ## 4.1 Tham số Last-Modified
-    - Khi lần đầu tiên Clien request một file từ **Server** , file này chưa hề đc lưu trong **Cache** ở Client , Server sẽ trả về cho Client file đó kèm theo tham số **Last-Modified**
-    trên **Response Headers** để xác định thời điểm cuối cùng file đó được sửa đổi .
+
+  - Khi lần đầu tiên Clien request một file từ **Server** , file này chưa hề đc lưu trong **Cache** ở Client , Server sẽ trả về cho Client file đó kèm theo tham số **Last-Modified** trên **Response Headers** để xác định thời điểm cuối cùng file đó được sửa đổi .
 
  <div style="text-align:center"><img src="images/last-modified.png" /> </div>
 
@@ -66,10 +70,9 @@ ___
       <li>Đầu tiên , **Client** sẽ y/c request kèm theo điều kiện lấy ngày thay đổi của file đó (Tham số `If-Modified-Since ` trong **Request Header** )</li>
       <li>Server sẽ đi tìm file và kiểm tra xem ngày thay đổi có khớp với thông tin **Client** gửi lên không .</li>
       <li> Nếu Server check Ok , Client sẽ nhận dc `Status Code ` là **304 Not Modified** </li>
-      <li>Clien sẽ ko phải download file đó từ Server mà vào trong Cache để lấy file đó .</li>
-    </ul>
+      <li>Clien sẽ ko phải download file đó từ Server mà vào trong Cache để lấy file đó .</li> </ul>
 
-     Trong trường hợp nếu tham số  `If-Modified-Since` trong **Request Header** và `Last-Modified` trong **Response Header** không trùng nhau thì clien sẽ download file mới , lưu Cache đồng thời lưu thông tin ngày thay đổ mới .
+  - Trong trường hợp nếu tham số  `If-Modified-Since` trong **Request Header** và `Last-Modified` trong **Response Header** không trùng nhau thì clien sẽ download file mới , lưu Cache đồng thời lưu thông tin ngày thay đổ mới .
 
 <a name="etag"> </a>
 
@@ -94,8 +97,7 @@ ___
    `Chú ý ` : Để khắc phục nhược điểm của `Etag` và `Last-Modified` là ta vẫn cứ phải chui lên Server để kiểm tra xem file đó có sự thay đổi không thì ở tham số `Expires` có thể khắc phục được nhược điểm đó .
   - Thông tin trong tham số Expires chính là thời điểm hết hạn của file đó, sau thời điểm này nếu Client vẫn muốn sử dụng file thì phải lên Server để download lại cũng như cập nhật thông tin Expires mới, còn nếu chưa hết hạn thì Client sẽ chỉ việc lấy thông tin từ Cache để sử dụng mà không cần hỏi lại Server.
 
-  <div style="text-align:center"><img src="images/expires.png
-" /> </div>
+  <div style="text-align:center"><img src="images/expires.png"> </div>
 
   - Hoạt động :
   <ul>
