@@ -1,0 +1,28 @@
+---
+ - name: Create Collection
+   become_user: "{{solrcloud_user}}"
+   command: "{{ solr_install_archive }}/bin/solr create_collection -c {{name_collection}}  -p {{solr_port}} -s {{number_shards}} -rf {{replication_factor}} -d data_driven_schema_configs"
+   tags: create_collection
+
+ - name: Uploading configuration set to Zookeeper
+   command: " {{ solr_install_archive}}/bin/solr zk upconfig -n {{name_collection}} -d data_driven_schema_configs -z {% for i in zookeeper_hosts %}{{ i }}:2181,{% endfor %} "
+   tags: upload_configset
+
+ - name: create collection using HTTP
+   uri:
+     url: "http://{{ ansible_host }}:{{solr_port}}/solr/admin/collections?action=CREATE&name={{name_collection}}&numShards={{number_shards}}&replicationFactor={{replication_factor}}&maxShardsPerNode=2&collection.configName={{name_collection}}"
+   tags: create_collection_http
+
+ - name: Delete Collection
+   uri:
+     url: "http://{{ansible_host}}:{{solr_port}}/solr/admin/collections?action=DELETE&name={{name_collection}}"
+   tags: delete_collection
+
+ - name: Upload db
+   command: " {{ solr_install_archive}}/bin/post -c {{name_collection}} -h {{ansible_host}} -p {{solr_port}} {{ path_file_upload }} "
+   tags: upload_db
+
+ - name: Reload Collection
+   uri:
+      url: "http://{{ansible_host}}:{{solr_port}}/solr/admin/collections?action=RELOAD&name={{name_collection}}"
+   tags: reload_collection

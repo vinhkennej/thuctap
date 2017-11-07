@@ -1,0 +1,10 @@
+---
+ solrcloud_user: vinhkma
+ solr_version: 6.5.0
+ solr_install_archive: /opt/solr-{{solr_version}}
+ solr_core_directory: "{{solr_install_archive}}/server/solr"
+ number_shards: 2
+ replication_factor: 2
+ name_collection: test_collection
+ solr_port: 8004
+ path_file_upload: "{{ solr_install_archive}}/example/exampledocs/books.json"

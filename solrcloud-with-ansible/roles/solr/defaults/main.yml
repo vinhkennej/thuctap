@@ -1,0 +1,8 @@
+---
+  solrcloud_user: vinhkma
+  solrcloud_group: vinhkma
+  solr_version: 6.5.0
+  solr_temp_archive: /tmp/solr-{{solr_version}}.tgz
+  solr_install_archive: /opt/solr-{{solr_version}}
+  solr_unarchive: /opt
+  solr_port: 8004

@@ -1,0 +1,11 @@
+---
+ - hosts: servers
+   remote_user: 
+   sudo: yes
+
+   roles:
+     - { role: zookeeper, tags: setup_zoo }
+     - { role: solr, tags: setup_solr }
+     - collection
+   post_tasks:
+     - shell: echo 'Done configuring solrcloud '

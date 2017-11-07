@@ -1,0 +1,29 @@
+---
+ - name: ensure requier folders exits
+   file:
+     path: "{{ item }}"
+     state: directory
+     owner: "{{solrcloud_user}}"
+     group: "{{solrcloud_group}}"
+     recurse: yes
+   with_items:
+    - "{{ solr_install_archive }}"
+
+ - name: copy solr to {{solr_temp_archive}}
+   copy:
+     src: solr-6.5.0.tgz
+     dest: "{{solr_temp_archive}}"
+
+ - name : unpacked Solr
+   unarchive:
+     copy: no
+     src: "{{solr_temp_archive}}"
+     dest: "/opt"
+     owner: "{{solrcloud_user}}"
+     group: "{{solrcloud_group}}"
+
+ - name: Start Solr
+   become_user: "{{solrcloud_user}}"
+   command: "{{ solr_install_archive }}/bin/solr start -c -p {{solr_port}} -z {% for i in zookeeper_hosts %}{{ i }}:2181,{% endfor %} -h {{ ansible_host }}"
+   tags:
+     - start_solr
