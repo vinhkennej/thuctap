@@ -3,6 +3,7 @@
 
 
 [I. Tổng quan về Iptables](#about-iptables)
+
 [II. Cấu trúc và cơ chế hoạt động của Iptables](#cautruc-iptables)
 
   [1. Kiến trúc](#kien-truc)
@@ -39,8 +40,7 @@
  - Cấu trúc  : iptables -> Tables -> Chains -> Rules 
  
  ![](images/structure.png)
-  
-####<a name="iptables-chains"></a>1.1. Iptables tables và chains
+####<a name="iptables-chains"></a>2.1. Iptables tables và chains
 
 - Iptables có 4 bảng :
 <ul>
@@ -81,7 +81,7 @@
 
 ---
 
-#### <a name="iptables-chains"></a> 1.2. Iptables rules
+#### <a name="iptables-chains"></a> 2.2. Iptables rules
 
 ***Targets***
 
@@ -93,7 +93,7 @@
 + DNAT: Dùng để thực hiện thay đổi địa chỉ đích của gói dữ liệu.
 + SNAT : Thay đổi địa chỉ nguồn của gói dữ liệu.
 
-#### <a name="iptables-chains"></a> 1.3. Quá trình xử lý gói tin trong iptables:
+#### <a name="iptables-chains"></a> 2.3. Quá trình xử lý gói tin trong iptables:
 
  ![](images/iptables-process.png)
 
@@ -108,7 +108,7 @@
 </li>
   </ul>
   
-#### <a name="using-iptables"></a>1.4. Sử dụng Iptables
+#### <a name="using-iptables"></a>2.4. Sử dụng Iptables
   
   - Cú pháp sử dụng :
 ```
