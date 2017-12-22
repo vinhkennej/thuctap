@@ -161,8 +161,8 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
 
 - Trong mỗi tập tin CSDL phải có và chỉ có 1 bản ghi SOA chỉ ra máy chủ nameserver là nơi cung cấp thông tin tin cây từ dữ liệu có trong zone : 
      
-  ```[domain name] IN SOA [dns-server][email-address]
-(
+  ```
+  [domain name] IN SOA [dns-server][email-address](
    [serial number]; 
    [refresh number]; 
    [retry number]; 
@@ -214,11 +214,7 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
 
 ***Chuẩn bị***
 
-|                        | Primary DNS server | Secondary DNS  | DNS Client  |
-|---------------- : | ------------- |:-------------:| -----:|
-| HostName  | Ubuntu Server 16.04  | Ubuntu Server 16.04 | Ubuntu Server 16.04 | 
-| HostName  | pri.vinhkma.com | sec.vinhkma.com|client.vinhkma.com| 
-| IP Address    | 10.0.0.128 | 10.0.0.129 |  10.0.0.130 | 
+![](images/chuanbi.png)
 
 ---
 
