@@ -1,17 +1,34 @@
-# Tìm hiểu về DNS
+# Tìm hiểu về DNS (Domain Name System)
 ### Mục lục
-[I. Tổng quan về DNS](#tong-quan)
-[II. Kiến trúc hoạt động của DNS](#kientruc-hoatdong)
-	[1. Kiến trúc](#kien-truc)
-	[2. Cách thức hoạt động](#hoat-dong)
-	[3. Phân loai](#phan-loai)
-[III. Thực hành](#thuc-hanh)
----
-### <a name="tong-quan"></a>I. Tổng quan về DNS
 
+[I. Tổng quan về DNS](#tong-quan)
+
+[II. Kiến trúc hoạt động của DNS](#kientruc-hoatdong)
+    [1. Kiến trúc](#kien-truc)
+    [2. Cách thức hoạt động](#hoat-dong)
+    [3. Phân loai](#phan-loai)
+    [4. Cơ chế hoạt động đồng bộ dữ liệu giữa các DNS Server](#co-che-hoat-dong)
+    [5. Các bản ghi DNS ](#dns-record)
+	
+[III. LABs](#lab)
+    [ Cấu hình Master-Slave DNS](#master-slave)
+    
+---
+
+### <a name="tong-quan"></a>I. Tổng quan về DNS
+ -  Hệ thống tên miền DNS (Domain Name System) được sử dụng để ánh xạ tên miền thành địa chỉ IP.
+* Mục đích chính của DNS :
+<ul>
+<li>Phân giải địa tên máy thành địa chỉ IP và ngược lại.</li>
+<li>Phân giải tên domain.</li>
+</ul>
 
 
 ### <a name="kientruc-hoatdong"></a>II. Kiến trúc hoạt động của DNS
+
+### <a name="kien-truc"></a>1. Kiến trúc DNS
+ <img src="https://imgur.com/Il7Z7oz">
+
 - Hệ thống tên miền được phân thành nhiêu cấp :
 <ul>
 <li>Root Domain: Là Server quản lý toàn bộ cấu trúc của hệ thống tên miền. Root Server không chứa dữ liệu thông tin về cấu trúc hệ thống DNS mà nó chỉ chuyển quyền (delegate) quản lý xuống cho các Server cấp thấp hơn. Nó có thể biểu diễn đơn giản chỉ là dấu chấm “.” 
@@ -29,17 +46,26 @@
 <image >
 
 ---
-##### <a name="kientruc-hoatdong"></a>2. Các thức hoạt động
-
-(1) . Người dùng gửi yêu cầu đến ISP DNS reslover để hỏi về địa chỉ IP ứng với tên miền " www.google.com"
-(2) . DNS reslover sẽ hỏi Root Domain xem ở đâu có thể tìm địa chỉ của tên miền "www.google.com".
-(3)  Máy chủ Root DNS không biết địa chỉ này là gì nhưng biết máy chủ DNS chịu trách nhiệm quản lý tên miền .com (TLDs). Hãy hỏi tiếp máy chủ DNS đó.
-(4) DNS reslovers hỏi máy chủ TLDs về địa chỉ "www.google.com".
-(5) Máy chủ TLDs không biết địa chỉ này nhưng biết máy chủ DNS chịu trách nhiệm cho tên miền .google.com là Second Level Domain. Hãy hỏi tiếp máy chủ DNS đó  
-(6) DNS Reslover tiếp tục hỏi máy chủ Second Level Domain .
-(7) Máy chỉ Second Level Domain trả về địa chỉ IP gắn với tên miền "www.google.com" cho ISP DNS reslover.
-(8) ISP DNS reslover gửi thông tin nhận được cho người dùng. Sau đó người dùng biết địa chỉ IP để truy cập đến "www.google.com".
-
+##### <a name="hoat-dong"></a>2. Các thức hoạt động
+<img src="https://imgur.com/my4VawR">
+<ul>
+<li>(1)  Người dùng gửi yêu cầu đến ISP DNS reslover để hỏi về địa chỉ IP ứng với tên miền " www.google.com" 
+</li>
+<li>(2) DNS reslover sẽ hỏi Root Domain xem ở đâu có thể tìm địa chỉ của tên miền "www.google.com".
+</li>
+<li>(3)  Máy chủ Root DNS không biết địa chỉ này là gì nhưng biết máy chủ DNS chịu trách nhiệm quản lý tên miền .com (TLDs). Hãy hỏi tiếp máy chủ DNS đó.
+</li>
+<li>(4) DNS reslovers hỏi máy chủ TLDs về địa chỉ "www.google.com".
+</li>
+<li>(5) Máy chủ TLDs không biết địa chỉ này nhưng biết máy chủ DNS chịu trách nhiệm cho tên miền .google.com là Second Level Domain. Hãy hỏi tiếp máy chủ DNS đó  
+</li>
+<li>(6) DNS Reslover tiếp tục hỏi máy chủ Second Level Domain .
+</li>
+<li>(7) Máy chỉ Second Level Domain trả về địa chỉ IP gắn với tên miền "www.google.com" cho ISP DNS reslover.
+</li>
+<li>(8) ISP DNS reslover gửi thông tin nhận được cho người dùng. Sau đó người dùng biết địa chỉ IP để truy cập đến "www.google.com".
+<li.
+</il>
 ---
 ##### <a name="phan-loai"></a>3. Phân loại DNS
 - Có 3 loại DNS server :
@@ -60,7 +86,7 @@
  - Khi lượng truy vấn Zone tăng cao tại Primary Server thì nó sẽ chuyển bớt tải sang cho Secondary Server .Hoặc khi Primary Server gặp sự cố không hoạt động được thì Secondary Server sẽ hoạt động thay thế cho đến khi Primary Server hoạt động trở lại.
   -  Primary Server thường xuyên thay đổi hoặc thêm vào các Zone mới. Nên DNS Server sử dụng cơ chế cho phép Secondary lấy thông tin từ Primary Server và lưu trữ nó. Có hai giải pháp lấy thông tin về các Zone mới là lấy toàn bộ (full) hoặc chỉ lấy phần thay đổi (incremental).
 
-** Caching-only Server **
+**Caching-only Server**
 
  - Tất cả các DNS Server đều có khả năng lưu trữ dữ liệu trên bộ nhớ cache của máy để trả lời truy vấn một cách nhanh chóng. Nhưng hê thống DNS còn có một loại Caching-only Server.
  - Loại này chỉ sử dụng cho việc truy vấn, lưu giữ câu trả lời dựa trên thông tin có trên cache của máy và cho kết quả truy vấn. Chúng không hề quản lý một domain nào và thông tin mà nó chỉ giới hạn những gì được lưu trên cache của Server.
@@ -74,14 +100,17 @@
 <li>Đồng bộ phần thay đổi (incremental zone transfer)</li>
 </ul>
 ---
-###### Các DNS Zone ;
+
+###### Các DNS Zone :
 <ul>
 <li>Forward Lookup Zone : Dùng để phân giải host name thành địa chỉ IP.</li>
 <li>Reverse Lookup Zone : Dùng để phân giải ngược giống như In-addr.arpa Zone. Cho phép phân giải địa chỉ IP thành host name.</li>
 </ul>
 ---
+
 #####Resource Records :
 – Là hệ thống cơ sở dữ liệu của DNS, được sử dụng để trả lời cho các truy vấn từ DNS Client.
+
 ##### Recursion Query và Iteration Query 
 -  Khi DNS Server không phân giải được host name, nó sẽ chuyển đến một DNS Server khác (forwarded) trong mạng. Quá trình này được gọi là kiểu yêu cầu Recursive ( phân giải đệ quy).
 - Nếu Recursion bị disable thì nó sẽ sử dụng Iterative (tương tác), tức là nó sẽ gởi yêu cầu phân giải lại tên của host name. Khi có một truy vấn từ Client, trước hết nó sẽ tìm trong cơ sở dữ liệu của chính nó, nếu không có, nó sẽ cho biết một máy chủ khác mà từ đó có thể tìm thấy kết quả truy vấn.
@@ -115,7 +144,10 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
 </l>
 </ul>
 ---
+##### <a name="dns-record"></a> 5. Các bản ghi DNS
+
 ###### Bản ghi SOA (Start of Authority)
+
 - Trong mỗi tập tin CSDL phải có và chỉ có 1 bản ghi SOA chỉ ra máy chủ nameserver là nơi cung cấp thông tin tin cây từ dữ liệu có trong zone :
      
   ```
@@ -128,4 +160,144 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
    [time-to-live number];
 )
  ```
+ 
+* Serial number : là giá trị để xem dữ liệu có được đồng bộ hay không. Nếu giá trị trên Primary DNS lớn hơn Secondary DNS thì quá trình chuyển dữ liệu mới được bắt đầu.
+* Refresh interval : thời gian cập nhật các record.
+* Retry interval : trong trường hợp Secondary DNS không thể kết nối với Primary DNS, thì Secondary DNS sẽ thực hiện kết nối lại sau khoảng thời gian Retry interval.
+*  Experis after : đây là khoảng thời gian mà Secondary DNS không thể kết nối với Primary DNS, dữ liệu trên Secondary DNS sẽ bị hủy.
+* Minimum (default) TTL : đây là giá trị áp dụng cho tất cả các bản ghi trong file dữ liệu, tham số này xác định dữ liệu sẽ được cache tại Primary DNS trong bao lâu.
+* TTL ( time to live) :  Đây là khoảng thời gian Primary DNS đươc caching dữ liệu. Khi hết khoảng thời gian này, dữ liệu được caching sẽ bị xóa. 
+
+---
+###### Bản ghi A(Address) và CNAME (Canonical Name)
+***Bản ghi A*** : ánh xạ tên vào địa chỉ IP 
+* Cú pháp :
+`
+ [Domain] IN A [địa chỉ ip máy]
+`
+***Bản ghi CNAME***
+* Bản ghi CNAME: Tạo alias trỏ vào tên ở bản ghi A. Cho phép 1 máy tính có thể có nhiều tên, nói cách khác thì bản ghi này cho phép nhiều tên cùng trỏ vào 1 địa chỉ Ip cho trước. Để khai báo bản ghi CNAME thì bắt buộc phải có bản ghi A để khai bảo tên máy. Tên miền ở bản ghi A trỏ đến địa chỉ ip của máy được gọi là tên miên chính (canoncial domain). Các tên miền khác muốn trỏ đến máy tính này phải được khai báo là bí danh của tên máy (alias domain).
+
+* Cú pháp :
+` [alias-domain] IN CNAME [canonical domain]`
+
+###### Bản ghi NS: Bản ghi dùng để khai báo máy chủ tên miền cho 1 tên miền.
+* Cú pháp :
+` [domain name] IN NS [DNS Server]`
+* domain name : Tên miền
+* DNS Server : Tên máy chủ tên miền
+
+######  Bản ghi PTR : Là bản ghi dùng để ánh xạ địa chỉ IP thành tên máy.
+* Cú pháp :
+`[IP] IN PTR [host-name]`
+
+---
+### <a name="labs"></a> III. Labs
+***Chuẩn bị***
+
+|                        | Primary DNS server | Secondary DNS  | DNS Client  |
+|---------------- : | ------------- |:-------------:| -----:|
+| HostName  | Ubuntu Server 16.04  | Ubuntu Server 16.04 | Ubuntu Server 16.04 | 
+| HostName  | pri.vinhkma.com | sec.vinhkma.com|client.vinhkma.com| 
+| IP Address    | 10.0.0.128 | 10.0.0.129 |  10.0.0.130 | 
+
+---
+
+##### <a name="master-slave"></a> Cấu hình Master-Slave DNS
+***1. Cài đặt và cấu hình trên Primary DNS server or Master DNS server***
+
+* Install Bind on the DNS Server
+``` 
+sudo apt-get update
+sudo apt-get install bind9 bind9utils bind9-doc
+```
+* Configuring Caching name server
+   Caching name server lưu lưu trữ kết quả truy vấn DNS cục bộ trong một khoảng thời gian cụ thể. Nó làm giảm lưu lượng truy cập của máy chủ DNS bằng cách lưu các truy vấn cục bộ, do đó nó cải thiện hiệu suất và hiệu quả của máy chủ DNS.
+  
+* Chỉnh sửu file /etc/bind/named.conf.options :
+`sudo nano /etc/bind/named.conf.options`
+* Bỏ comment và thêm địa chỉ ISP của bạn hoặc thêm địa chỉ Google public DNS server IP .
+```
+forwarders {
+ 8.8.8.8;
+ };
+```
+* Sau đó restart lại bind9
+`sudo systemctl restart bind9`
+
+* Tất cả cấu hình DNS sẽ được lưu tại thư mục /etc/bind
+* Đầu tiên ta sẽ cấu hình forward and reverse zone files.
+ - Chỉnh sửa file /etc/bind/named.conf.local với nội dung :
+ <img src="https://imgur.com/aovpSkk">
+ Ở đây, for.vinhkma.com là tệp foward zone file và rev.vinhkma.com là reverse zone file, 10.0.0129 là địa chỉ IP của Secondary DNS server. Sử dụng Secondary DNS server vì 2NS  sẽ bắt đầu tìm nạp các truy vấn nếu Primary DNS server bị lỗi.
+ * Tiếp theo ta sẽ tạo zone file mà chúng ta đã định nghĩa trong tệp /etc/bind/named.conf.local 
+ *Đầu tiên ta sẽ tạo forward zone file :* 
+ `sudo nano /etc/bind/for.vinhkma.com`
+ * Cấu hình bản ghi SOA như sau : 
+<img src="https://imgur.com/v4v9BIR">
+ *Tiếp theo ta sẽ tạo reverse zone file :*
+ `sudo nano /etc/bind/rev.vinhkma.com`
+ * Thêm các dòng sau : 
+ <img scr="https://imgur.com/a/RPhv8"> 
+ 
+ * Phân quyền cho thư mục bind9
+ `sudo chmod -R 755 /etc/bind`
+ `sudo chown -R bind:bind /etc/bind`
+ * Verify cấu hình DNS v zone files. 
+ `sudo named-checkconf /etc/bind/named.conf
+ `
+ `sudo named-checkconf /etc/bind/named.conf.local
+ `
+ * Tiếp tục kiểm tra zone file sử dụng lệnh sau :
+ `sudo named-checkzone vinhkma.com /etc/bind/for.vinhkma.com`
+ <img src="https://imgur.com/FEkjqN6">
+  `sudo named-checkzone vinhkma.com /etc/bind/rev.vinhkma.com`
+  <img src="https://imgur.com/zMPE9AP">
+  
+  * Chỉnh sửa file cấu hình network và thêm địa chỉ IP cuar Private DNS server.
+  <img src="https://imgur.com/XjUXQZt">
+ 
+ * Cuối cùng restart Bind9 service
+ `sudo systemctl restart bind9`
+ 
+ *Testing primary DNS server
+ `dig pri.vinhkma.com`
+ <img src="https://imgur.com/s0QRTUi">
+ <img src="https://imgur.com/1bap1dc">
+
+***2. Cài đặt và cấu hình trên Second DNS server or Slave DNS server***
+
+* Install Bind on the DNS Server
+``` 
+sudo apt-get update
+sudo apt-get install bind9 bind9utils bind9-doc
+```
+ * Tạo zone file trong file cấu hình /etc/bind/named.conf.local như sau :
+ <img src="https://imgur.com/a/FxSBB">
+* Chú ý:  path của zone files phải nằm trong thư mục  /var/cache/bind *
+ * Tiếp theo, sẽ phân quyền cho thư mục bind 
+ `sudo chmod -R 755 /etc/bind`
+ `sudo chown -R bind:bind /etc/bind`
+ * Chỉnh sửa file cấu hình network và thêm địa chỉ của Primary và secondary DNS server.
+ `sudo nano /etc/network/interfaces`
+ <img src="https://imgur.com/hXdjTy8">
+
+*Testing primary DNS server:
+ `dig sec.vinhkma.com`
+<img src="https://imgur.com/a/fzxpp">
+
+`Chú ý: zone files chỉ được chuyển khi số  Serial Number trên Primary DNS server lớn hơn Second DNS server.`
+ 
+***3.Cấu hình trên DNS Client***
+* Chỉnh sửa file cấu hình Network và thêm địa chỉ IP nameserver của Primary DNS và Second DNS Server.
+`sudo nano /etc/network/interfaces`
+<img src="https://imgur.com/a/wbeEE">
+* Cuối cùng ta sẽ sử dụng dig command để kiểm tra :
+<img src="https://imgur.com/E1DnW3S">
+<img src="https://imgur.com/d38rWFB">
+<img src="https://imgur.com/ZWnrsAv">
+<img src="https://imgur.com/Zz1BycK">
+ 
+
+
 
