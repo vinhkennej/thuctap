@@ -4,10 +4,15 @@
 
 [I. Tổng quan về Iptables](#about-iptables)
 [II. Cấu trúc và cơ chế hoạt động của Iptables](#cautruc-iptables)
+
   [1. Kiến trúc](#kien-truc)
+  
   [1.1. Iptables tables và Chains](#iptables-chains)
+  
   [1.2. Iptables rules](#iptables-rules)
+  
   [1.3. Cơ chế xử lý gói tin](#co-che-iptables)  
+  
   [1.4. Sử dụng Iptables](#using-iptables)
   
 ---
@@ -18,7 +23,7 @@
 
 - ptables bao gồm 2 phần là netfilter nằm bên trong nhân Linux và iptables nằm ở vùng ngoài nhân. iptables chịu trách nhiệm giao tiếp với người dùng và sau đó đẩy rules của người dùng vào cho netfilter xử lý. netfilter thực hiện công việc lọc các gói tin ở mức IP. 
 
-***Một số chức năng của IPtables : ***
+***Một số chức năng của IPtables :***
 
 - Có khả năng phân tích gói tin hiệu quả.
 - Filtering gói tin dựa vào MAC và một số cờ hiệu (flags) trong TCP Header.
@@ -35,7 +40,7 @@
  
  ![](images/structure.png)
   
-####<a name="iptables-chains"></a> 1.1. Iptables tables và chains
+####<a name="iptables-chains"></a>1.1. Iptables tables và chains
 
 - Iptables có 4 bảng :
 <ul>
@@ -45,7 +50,7 @@
 <li>Raw table</li>
 </ul>
 
-***Filer table : ***
+***Filter table :***
 - Filter là bảng mặc định của iptables. 
 - Iptables filter gồm các chains :
     + INPUT chain – Incoming to firewall : Lọc các packet khi đi vào server
