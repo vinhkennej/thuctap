@@ -4,11 +4,16 @@
 [I. Tổng quan về DNS](#tong-quan)
 
 [II. Kiến trúc hoạt động của DNS](#kientruc-hoatdong)
-    [1. Kiến trúc](#kien-truc)
-    [2. Cách thức hoạt động](#hoat-dong)
-    [3. Phân loai](#phan-loai)
-    [4. Cơ chế hoạt động đồng bộ dữ liệu giữa các DNS Server](#co-che-hoat-dong)
-    [5. Các bản ghi DNS ](#dns-record)
+
+  [1. Kiến trúc](#kien-truc)
+    
+  [2. Cách thức hoạt động](#hoat-dong)
+    
+  [3. Phân loai](#phan-loai)
+    
+  [4. Cơ chế hoạt động đồng bộ dữ liệu giữa các DNS Server](#co-che-hoat-dong)
+    
+  [5. Các bản ghi DNS ](#dns-record)
 	
 [III. LABs](#lab)
     [ Cấu hình Master-Slave DNS](#master-slave)
@@ -27,7 +32,8 @@
 ### <a name="kientruc-hoatdong"></a>II. Kiến trúc hoạt động của DNS
 
 ### <a name="kien-truc"></a>1. Kiến trúc DNS
- <img src="https://imgur.com/Il7Z7oz">
+![](images/dns.png)
+
 
 - Hệ thống tên miền được phân thành nhiêu cấp :
 <ul>
@@ -47,7 +53,7 @@
 
 ---
 ##### <a name="hoat-dong"></a>2. Các thức hoạt động
-<img src="https://imgur.com/my4VawR">
+![](images/darequest-process.png)
 <ul>
 <li>(1)  Người dùng gửi yêu cầu đến ISP DNS reslover để hỏi về địa chỉ IP ứng với tên miền " www.google.com" 
 </li>
@@ -228,21 +234,28 @@ forwarders {
 * Tất cả cấu hình DNS sẽ được lưu tại thư mục /etc/bind
 * Đầu tiên ta sẽ cấu hình forward and reverse zone files.
  - Chỉnh sửa file /etc/bind/named.conf.local với nội dung :
- <img src="https://imgur.com/aovpSkk">
+ 
+![](images/config1.png)
+
  Ở đây, for.vinhkma.com là tệp foward zone file và rev.vinhkma.com là reverse zone file, 10.0.0129 là địa chỉ IP của Secondary DNS server. Sử dụng Secondary DNS server vì 2NS  sẽ bắt đầu tìm nạp các truy vấn nếu Primary DNS server bị lỗi.
+ 
  * Tiếp theo ta sẽ tạo zone file mà chúng ta đã định nghĩa trong tệp /etc/bind/named.conf.local 
  *Đầu tiên ta sẽ tạo forward zone file :* 
  `sudo nano /etc/bind/for.vinhkma.com`
  * Cấu hình bản ghi SOA như sau : 
-<img src="https://imgur.com/v4v9BIR">
+ 
+![](images/for.png)
+
  *Tiếp theo ta sẽ tạo reverse zone file :*
  `sudo nano /etc/bind/rev.vinhkma.com`
  * Thêm các dòng sau : 
- <img scr="https://imgur.com/a/RPhv8"> 
+
+![](images/rev.png)
  
  * Phân quyền cho thư mục bind9
  `sudo chmod -R 755 /etc/bind`
  `sudo chown -R bind:bind /etc/bind`
+ 
  * Verify cấu hình DNS v zone files. 
  `sudo named-checkconf /etc/bind/named.conf
  `
@@ -250,20 +263,27 @@ forwarders {
  `
  * Tiếp tục kiểm tra zone file sử dụng lệnh sau :
  `sudo named-checkzone vinhkma.com /etc/bind/for.vinhkma.com`
- <img src="https://imgur.com/FEkjqN6">
+
+![](images/check-zone-for.png)
+
   `sudo named-checkzone vinhkma.com /etc/bind/rev.vinhkma.com`
-  <img src="https://imgur.com/zMPE9AP">
+  
+  ![](images/check-zone-rev.png)
+ 
   
   * Chỉnh sửa file cấu hình network và thêm địa chỉ IP cuar Private DNS server.
-  <img src="https://imgur.com/XjUXQZt">
+
+![](images/ip-pri.png)
  
  * Cuối cùng restart Bind9 service
  `sudo systemctl restart bind9`
  
- *Testing primary DNS server
+ * Testing primary DNS server
+ 
  `dig pri.vinhkma.com`
- <img src="https://imgur.com/s0QRTUi">
- <img src="https://imgur.com/1bap1dc">
+ 
+![](images/dig-pri.png)
+![](images/nslookup-pri.png)
 
 ***2. Cài đặt và cấu hình trên Second DNS server or Slave DNS server***
 
@@ -273,31 +293,40 @@ sudo apt-get update
 sudo apt-get install bind9 bind9utils bind9-doc
 ```
  * Tạo zone file trong file cấu hình /etc/bind/named.conf.local như sau :
- <img src="https://imgur.com/a/FxSBB">
+ 
+ ![](images/bind-conf.png)
+ 
 * Chú ý:  path của zone files phải nằm trong thư mục  /var/cache/bind *
  * Tiếp theo, sẽ phân quyền cho thư mục bind 
+ 
  `sudo chmod -R 755 /etc/bind`
  `sudo chown -R bind:bind /etc/bind`
+ 
  * Chỉnh sửa file cấu hình network và thêm địa chỉ của Primary và secondary DNS server.
+ 
  `sudo nano /etc/network/interfaces`
  <img src="https://imgur.com/hXdjTy8">
 
-*Testing primary DNS server:
+* Testing primary DNS server:
+ 
  `dig sec.vinhkma.com`
-<img src="https://imgur.com/a/fzxpp">
+
+![](images/dig-sec.png)
 
 `Chú ý: zone files chỉ được chuyển khi số  Serial Number trên Primary DNS server lớn hơn Second DNS server.`
  
 ***3.Cấu hình trên DNS Client***
 * Chỉnh sửa file cấu hình Network và thêm địa chỉ IP nameserver của Primary DNS và Second DNS Server.
-`sudo nano /etc/network/interfaces`
-<img src="https://imgur.com/a/wbeEE">
-* Cuối cùng ta sẽ sử dụng dig command để kiểm tra :
-<img src="https://imgur.com/E1DnW3S">
-<img src="https://imgur.com/d38rWFB">
-<img src="https://imgur.com/ZWnrsAv">
-<img src="https://imgur.com/Zz1BycK">
- 
 
+`sudo nano /etc/network/interfaces`
+
+![](images/network-client.png)
+
+* Cuối cùng ta sẽ sử dụng dig command để kiểm tra :
+
+ ![](images/client4.png)
+ ![](images/client3.png)
+  ![](images/client2.png)
+   ![](images/client1.png)
 
 
