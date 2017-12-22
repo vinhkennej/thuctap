@@ -155,7 +155,7 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
 
 ###### Bản ghi SOA (Start of Authority)
 
-* Trong mỗi tập tin CSDL phải có và chỉ có 1 bản ghi SOA chỉ ra máy chủ nameserver là nơi cung cấp thông tin tin cây từ dữ liệu có trong zone : *
+- Trong mỗi tập tin CSDL phải có và chỉ có 1 bản ghi SOA chỉ ra máy chủ nameserver là nơi cung cấp thông tin tin cây từ dữ liệu có trong zone : 
      
   ```
 [domain name] IN SOA [dns-server][email-address]
