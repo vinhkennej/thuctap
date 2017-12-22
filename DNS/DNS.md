@@ -150,11 +150,12 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
 </l>
 </ul>
 ---
+
 ##### <a name="dns-record"></a> 5. Các bản ghi DNS
 
 ###### Bản ghi SOA (Start of Authority)
 
-- Trong mỗi tập tin CSDL phải có và chỉ có 1 bản ghi SOA chỉ ra máy chủ nameserver là nơi cung cấp thông tin tin cây từ dữ liệu có trong zone :
+* Trong mỗi tập tin CSDL phải có và chỉ có 1 bản ghi SOA chỉ ra máy chủ nameserver là nơi cung cấp thông tin tin cây từ dữ liệu có trong zone : *
      
   ```
 [domain name] IN SOA [dns-server][email-address]
@@ -166,39 +167,49 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
    [time-to-live number];
 )
  ```
- 
-* Serial number : là giá trị để xem dữ liệu có được đồng bộ hay không. Nếu giá trị trên Primary DNS lớn hơn Secondary DNS thì quá trình chuyển dữ liệu mới được bắt đầu.
-* Refresh interval : thời gian cập nhật các record.
-* Retry interval : trong trường hợp Secondary DNS không thể kết nối với Primary DNS, thì Secondary DNS sẽ thực hiện kết nối lại sau khoảng thời gian Retry interval.
-*  Experis after : đây là khoảng thời gian mà Secondary DNS không thể kết nối với Primary DNS, dữ liệu trên Secondary DNS sẽ bị hủy.
-* Minimum (default) TTL : đây là giá trị áp dụng cho tất cả các bản ghi trong file dữ liệu, tham số này xác định dữ liệu sẽ được cache tại Primary DNS trong bao lâu.
-* TTL ( time to live) :  Đây là khoảng thời gian Primary DNS đươc caching dữ liệu. Khi hết khoảng thời gian này, dữ liệu được caching sẽ bị xóa. 
+- Serial number : là giá trị để xem dữ liệu có được đồng bộ hay không. Nếu giá trị trên Primary DNS lớn hơn Secondary DNS thì quá trình chuyển dữ liệu mới được bắt đầu.
+- Refresh interval : thời gian cập nhật các record.
+- Retry interval : trong trường hợp Secondary DNS không thể kết nối với Primary DNS, thì Secondary DNS sẽ thực hiện kết nối lại sau khoảng thời gian Retry interval.
+-  Experis after : đây là khoảng thời gian mà Secondary DNS không thể kết nối với Primary DNS, dữ liệu trên Secondary DNS sẽ bị hủy.
+- Minimum (default) TTL : đây là giá trị áp dụng cho tất cả các bản ghi trong file dữ liệu, tham số này xác định dữ liệu sẽ được cache tại Primary DNS trong bao lâu.
+- TTL ( time to live) :  Đây là khoảng thời gian Primary DNS đươc caching dữ liệu. Khi hết khoảng thời gian này, dữ liệu được caching sẽ bị xóa. 
 
 ---
+
 ###### Bản ghi A(Address) và CNAME (Canonical Name)
+
 ***Bản ghi A*** : ánh xạ tên vào địa chỉ IP 
-* Cú pháp :
+
+- Cú pháp :
 `
  [Domain] IN A [địa chỉ ip máy]
 `
 ***Bản ghi CNAME***
-* Bản ghi CNAME: Tạo alias trỏ vào tên ở bản ghi A. Cho phép 1 máy tính có thể có nhiều tên, nói cách khác thì bản ghi này cho phép nhiều tên cùng trỏ vào 1 địa chỉ Ip cho trước. Để khai báo bản ghi CNAME thì bắt buộc phải có bản ghi A để khai bảo tên máy. Tên miền ở bản ghi A trỏ đến địa chỉ ip của máy được gọi là tên miên chính (canoncial domain). Các tên miền khác muốn trỏ đến máy tính này phải được khai báo là bí danh của tên máy (alias domain).
+
+- Bản ghi CNAME: Tạo alias trỏ vào tên ở bản ghi A. Cho phép 1 máy tính có thể có nhiều tên, nói cách khác thì bản ghi này cho phép nhiều tên cùng trỏ vào 1 địa chỉ Ip cho trước. Để khai báo bản ghi CNAME thì bắt buộc phải có bản ghi A để khai bảo tên máy. Tên miền ở bản ghi A trỏ đến địa chỉ ip của máy được gọi là tên miên chính (canoncial domain). Các tên miền khác muốn trỏ đến máy tính này phải được khai báo là bí danh của tên máy (alias domain).
 
 * Cú pháp :
+
 ` [alias-domain] IN CNAME [canonical domain]`
 
 ###### Bản ghi NS: Bản ghi dùng để khai báo máy chủ tên miền cho 1 tên miền.
-* Cú pháp :
+
+- Cú pháp :
+
 ` [domain name] IN NS [DNS Server]`
-* domain name : Tên miền
-* DNS Server : Tên máy chủ tên miền
+
+- domain name : Tên miền
+- DNS Server : Tên máy chủ tên miền
 
 ######  Bản ghi PTR : Là bản ghi dùng để ánh xạ địa chỉ IP thành tên máy.
-* Cú pháp :
+
+- Cú pháp :
 `[IP] IN PTR [host-name]`
 
 ---
+
 ### <a name="labs"></a> III. Labs
+
 ***Chuẩn bị***
 
 |                        | Primary DNS server | Secondary DNS  | DNS Client  |
@@ -210,58 +221,70 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
 ---
 
 ##### <a name="master-slave"></a> Cấu hình Master-Slave DNS
+
 ***1. Cài đặt và cấu hình trên Primary DNS server or Master DNS server***
 
-* Install Bind on the DNS Server
+- Install Bind on the DNS Server
 ``` 
 sudo apt-get update
 sudo apt-get install bind9 bind9utils bind9-doc
 ```
-* Configuring Caching name server
+- Configuring Caching name server
    Caching name server lưu lưu trữ kết quả truy vấn DNS cục bộ trong một khoảng thời gian cụ thể. Nó làm giảm lưu lượng truy cập của máy chủ DNS bằng cách lưu các truy vấn cục bộ, do đó nó cải thiện hiệu suất và hiệu quả của máy chủ DNS.
   
-* Chỉnh sửu file /etc/bind/named.conf.options :
+- Chỉnh sửu file /etc/bind/named.conf.options :
+
 `sudo nano /etc/bind/named.conf.options`
-* Bỏ comment và thêm địa chỉ ISP của bạn hoặc thêm địa chỉ Google public DNS server IP .
+
+- Bỏ comment và thêm địa chỉ ISP của bạn hoặc thêm địa chỉ Google public DNS server IP .
+
 ```
 forwarders {
  8.8.8.8;
  };
 ```
-* Sau đó restart lại bind9
+- Sau đó restart lại bind9
+
 `sudo systemctl restart bind9`
 
-* Tất cả cấu hình DNS sẽ được lưu tại thư mục /etc/bind
-* Đầu tiên ta sẽ cấu hình forward and reverse zone files.
- - Chỉnh sửa file /etc/bind/named.conf.local với nội dung :
+- Tất cả cấu hình DNS sẽ được lưu tại thư mục /etc/bind
+- Đầu tiên ta sẽ cấu hình forward and reverse zone files.
+- Chỉnh sửa file /etc/bind/named.conf.local với nội dung :
  
 ![](images/config1.png)
 
  Ở đây, for.vinhkma.com là tệp foward zone file và rev.vinhkma.com là reverse zone file, 10.0.0129 là địa chỉ IP của Secondary DNS server. Sử dụng Secondary DNS server vì 2NS  sẽ bắt đầu tìm nạp các truy vấn nếu Primary DNS server bị lỗi.
  
- * Tiếp theo ta sẽ tạo zone file mà chúng ta đã định nghĩa trong tệp /etc/bind/named.conf.local 
+- Tiếp theo ta sẽ tạo zone file mà chúng ta đã định nghĩa trong tệp /etc/bind/named.conf.local 
+ 
  *Đầu tiên ta sẽ tạo forward zone file :* 
+ 
  `sudo nano /etc/bind/for.vinhkma.com`
- * Cấu hình bản ghi SOA như sau : 
+ 
+- Cấu hình bản ghi SOA như sau : 
  
 ![](images/for.png)
 
  *Tiếp theo ta sẽ tạo reverse zone file :*
+ 
  `sudo nano /etc/bind/rev.vinhkma.com`
- * Thêm các dòng sau : 
+ 
+ - Thêm các dòng sau : 
 
 ![](images/rev.png)
  
- * Phân quyền cho thư mục bind9
+ - Phân quyền cho thư mục bind9
+ 
  `sudo chmod -R 755 /etc/bind`
  `sudo chown -R bind:bind /etc/bind`
  
- * Verify cấu hình DNS v zone files. 
+ - Verify cấu hình DNS v zone files. 
+ 
  `sudo named-checkconf /etc/bind/named.conf
  `
  `sudo named-checkconf /etc/bind/named.conf.local
  `
- * Tiếp tục kiểm tra zone file sử dụng lệnh sau :
+ - Tiếp tục kiểm tra zone file sử dụng lệnh sau :
  `sudo named-checkzone vinhkma.com /etc/bind/for.vinhkma.com`
 
 ![](images/check-zone-for.png)
@@ -271,14 +294,14 @@ forwarders {
   ![](images/check-zone-rev.png)
  
   
-  * Chỉnh sửa file cấu hình network và thêm địa chỉ IP cuar Private DNS server.
+  - Chỉnh sửa file cấu hình network và thêm địa chỉ IP cuar Private DNS server.
 
 ![](images/ip-pri.png)
  
- * Cuối cùng restart Bind9 service
+ - Cuối cùng restart Bind9 service
  `sudo systemctl restart bind9`
  
- * Testing primary DNS server
+- Testing primary DNS server
  
  `dig pri.vinhkma.com`
  
@@ -287,27 +310,28 @@ forwarders {
 
 ***2. Cài đặt và cấu hình trên Second DNS server or Slave DNS server***
 
-* Install Bind on the DNS Server
+- Install Bind on the DNS Server
 ``` 
 sudo apt-get update
 sudo apt-get install bind9 bind9utils bind9-doc
 ```
- * Tạo zone file trong file cấu hình /etc/bind/named.conf.local như sau :
+- Tạo zone file trong file cấu hình /etc/bind/named.conf.local như sau :
  
  ![](images/bind-conf.png)
  
-* Chú ý:  path của zone files phải nằm trong thư mục  /var/cache/bind *
- * Tiếp theo, sẽ phân quyền cho thư mục bind 
+- Chú ý:  path của zone files phải nằm trong thư mục  /var/cache/bind *
+- Tiếp theo, sẽ phân quyền cho thư mục bind 
  
  `sudo chmod -R 755 /etc/bind`
  `sudo chown -R bind:bind /etc/bind`
  
- * Chỉnh sửa file cấu hình network và thêm địa chỉ của Primary và secondary DNS server.
+- Chỉnh sửa file cấu hình network và thêm địa chỉ của Primary và secondary DNS server.
  
  `sudo nano /etc/network/interfaces`
- <img src="https://imgur.com/hXdjTy8">
 
-* Testing primary DNS server:
+ ![](images/ip-sec.png)
+
+- Testing primary DNS server:
  
  `dig sec.vinhkma.com`
 
@@ -316,17 +340,18 @@ sudo apt-get install bind9 bind9utils bind9-doc
 `Chú ý: zone files chỉ được chuyển khi số  Serial Number trên Primary DNS server lớn hơn Second DNS server.`
  
 ***3.Cấu hình trên DNS Client***
-* Chỉnh sửa file cấu hình Network và thêm địa chỉ IP nameserver của Primary DNS và Second DNS Server.
+
+- Chỉnh sửa file cấu hình Network và thêm địa chỉ IP nameserver của Primary DNS và Second DNS Server.
 
 `sudo nano /etc/network/interfaces`
 
 ![](images/network-client.png)
 
-* Cuối cùng ta sẽ sử dụng dig command để kiểm tra :
+- Cuối cùng ta sẽ sử dụng dig command để kiểm tra :
 
  ![](images/client4.png)
  ![](images/client3.png)
-  ![](images/client2.png)
-   ![](images/client1.png)
+ ![](images/client2.png)
+ ![](images/client1.png)
 
 
