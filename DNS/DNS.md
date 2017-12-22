@@ -73,6 +73,7 @@
 <li.
 </il>
 ---
+
 ##### <a name="phan-loai"></a>3. Phân loại DNS
 - Có 3 loại DNS server :
 <ul>
@@ -80,6 +81,7 @@
 <li>Secondary DNS server</li>
 <li>Caching DNS server</li>
 </ul>
+
 **Primary DNS server**
 
  - Thông tin về tên miền do nó quản lý được lưu trữ tại đây và sau đó có thể được chuyển sang cho các Secondary Server.
@@ -108,6 +110,7 @@
 ---
 
 ###### Các DNS Zone :
+
 <ul>
 <li>Forward Lookup Zone : Dùng để phân giải host name thành địa chỉ IP.</li>
 <li>Reverse Lookup Zone : Dùng để phân giải ngược giống như In-addr.arpa Zone. Cho phép phân giải địa chỉ IP thành host name.</li>
@@ -115,6 +118,7 @@
 ---
 
 #####Resource Records :
+
 – Là hệ thống cơ sở dữ liệu của DNS, được sử dụng để trả lời cho các truy vấn từ DNS Client.
 
 ##### Recursion Query và Iteration Query 
@@ -157,16 +161,15 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
 
 - Trong mỗi tập tin CSDL phải có và chỉ có 1 bản ghi SOA chỉ ra máy chủ nameserver là nơi cung cấp thông tin tin cây từ dữ liệu có trong zone : 
      
-  ```
-[domain name] IN SOA [dns-server][email-address]
+  ```[domain name] IN SOA [dns-server][email-address]
 (
    [serial number]; 
    [refresh number]; 
    [retry number]; 
    [expire number];
    [time-to-live number];
-)
- ```
+) ```
+
 - Serial number : là giá trị để xem dữ liệu có được đồng bộ hay không. Nếu giá trị trên Primary DNS lớn hơn Secondary DNS thì quá trình chuyển dữ liệu mới được bắt đầu.
 - Refresh interval : thời gian cập nhật các record.
 - Retry interval : trong trường hợp Secondary DNS không thể kết nối với Primary DNS, thì Secondary DNS sẽ thực hiện kết nối lại sau khoảng thời gian Retry interval.
@@ -181,9 +184,8 @@ Với trao đổi IXFR Zone ( Incremental Zone Transfer) thì sự khác nhau gi
 ***Bản ghi A*** : ánh xạ tên vào địa chỉ IP 
 
 - Cú pháp :
-`
- [Domain] IN A [địa chỉ ip máy]
-`
+`[Domain] IN A [địa chỉ ip máy]`
+
 ***Bản ghi CNAME***
 
 - Bản ghi CNAME: Tạo alias trỏ vào tên ở bản ghi A. Cho phép 1 máy tính có thể có nhiều tên, nói cách khác thì bản ghi này cho phép nhiều tên cùng trỏ vào 1 địa chỉ Ip cho trước. Để khai báo bản ghi CNAME thì bắt buộc phải có bản ghi A để khai bảo tên máy. Tên miền ở bản ghi A trỏ đến địa chỉ ip của máy được gọi là tên miên chính (canoncial domain). Các tên miền khác muốn trỏ đến máy tính này phải được khai báo là bí danh của tên máy (alias domain).
