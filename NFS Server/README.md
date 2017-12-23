@@ -7,6 +7,8 @@
 
 [3. Cài đặt cấu hình NFS Server trên Ubuntu](#install-nfs) 
 
+---
+
 ####<a name="about-nfs"></a>1. Giới thiệu về NFS
 
 - NFS là hệ thống File System được xây dựng trên hệ điều hành Linux với mục đích cung cấp dịch vụ truy cập file từ xa giống như truy cập trên máy tính local, việc truy cập thông qua môi trường mạng (thông thường là mạng LAN – Ethernet). 

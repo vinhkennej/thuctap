@@ -4,7 +4,7 @@
 [I. Tổng quan về DNS](#tong-quan)
 
 [II. Kiến trúc hoạt động của DNS](#kientruc-hoatdong)
-
+  
   [1. Kiến trúc](#kien-truc)
     
   [2. Cách thức hoạt động](#hoat-dong)
