@@ -121,7 +121,7 @@ Chúng tôi sẽ tạo hai thư mục để gắn kết với thư mục host.
  Gắn kết các thư mục trên Client
  
  ```
-    sudo mount 10.0.0.130:/var/nfs/general /nfs/general
+    sudo mount 10.0.0.200:/var/nfs/general /nfs/general
     sudo mount 10.0.0.200:/home /nfs/home
 ```
 
