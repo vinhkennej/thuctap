@@ -87,8 +87,8 @@
  - Add thêm 2 dòng sau vào cuối file 
  
 ```
-    /var/nfs/general 203.0.113.256(rw,sync,no_subtree_check)
-   /home 203.0.113.256(rw,sync,no_root_squash,no_subtree_check) 
+    /var/nfs/general 10.0.0.130(rw,sync,no_subtree_check)
+   /home 10.0.0.130(rw,sync,no_root_squash,no_subtree_check) 
 ```
 
 - Sau đó, khởi động lại máy chủ NFS với các lệnh sau đây:
