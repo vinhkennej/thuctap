@@ -1,2 +1,4 @@
-# thuc tap tai vccloud 
-# branch vinhbv2
+# Ghi chep basic sys
+
+
+
